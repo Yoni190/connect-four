@@ -2,13 +2,21 @@ require_relative 'board'
 require_relative 'player'
 
 class Game 
-    attr_accessor :board
+    attr_accessor :board_game, :p1, :p2
     def initialize
-        board = Board.new
+        self.board_game = Board.new
         greet_players
-        p1 = Player.new(get_name)
-        p2 = Player.new(get_name)
+        self.p1 = Player.new(get_name)
+        self.p2 = Player.new(get_name)
         
+    end
+
+    def play_round
+        display_board
+    end
+
+    def play_game
+        play_round
     end
 
     def greet_players
@@ -23,5 +31,9 @@ class Game
     def get_name
         puts "Enter your name Player:"
         gets.chomp
+    end
+
+    def display_board
+        puts board_game.board
     end
 end
