@@ -20,7 +20,13 @@ class Game
         board = board_game.board
         choice_index = board.index(choice)
         change_index = choice_index - 16
-        colorized_choice = 'o'.colorize(:yellow)
+        if turn.zero?
+            colorized_choice = 'o'.colorize(:yellow)
+            turn = 1
+        elsif turn == 1 
+            colorized_choice = 'o'.colorize(:red)
+            turn = 0
+        end
 
         board[choice_index] = colorized_choice
         board[change_index] = choice
