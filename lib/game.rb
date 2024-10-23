@@ -2,21 +2,37 @@ require_relative 'board'
 require_relative 'player'
 
 class Game 
-    attr_accessor :board_game, :p1, :p2
+    attr_accessor :board_game, :p1, :p2, :turn
     def initialize
         self.board_game = Board.new
         greet_players
         self.p1 = Player.new(get_name)
         self.p2 = Player.new(get_name)
-        
+        self.turn = 0
     end
 
     def play_round
         display_board
     end
 
+    def place_choice(choice)
+        board = board_game.board
+        choice_index = board.index(choice)
+        change_index = choice_index - 16
+
+        board[choice_index] = "o"
+        board[change_index] = choice
+
+        board
+    end
+
+    def prompt_choice
+        put "Choose your placement: "
+        gets.chomp
+    end
+
     def play_game
-        play_round
+        display_board
     end
 
     def greet_players
