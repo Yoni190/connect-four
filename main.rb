@@ -1,4 +1,4 @@
 require_relative 'lib/board'
+require_relative 'lib/game'
 
-bo = Board.new
-puts bo.create_board
+game = Game.new
