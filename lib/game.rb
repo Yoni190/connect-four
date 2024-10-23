@@ -12,8 +12,16 @@ class Game
         self.turn = 0
     end
 
-    def play_round
+    def play_game
+        7.times do
         display_board
+        play_round
+        end
+    end
+
+    def play_round
+        choice = prompt_choice
+        self.board_game.board = place_choice(choice)
     end
 
     def place_choice(choice)
@@ -39,13 +47,10 @@ class Game
     end
 
     def prompt_choice
-        put "Choose your placement: "
+        puts "Choose your placement: "
         gets.chomp
     end
 
-    def play_game
-        display_board
-    end
 
     def greet_players
         greeting = "\t\s\s-----------------------------------------------------------------------------------------------\n
@@ -62,6 +67,6 @@ class Game
     end
 
     def display_board
-        puts board_game.board
+        puts board_game.board + "\n"
     end
 end
