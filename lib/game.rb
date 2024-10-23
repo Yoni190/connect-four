@@ -1,5 +1,6 @@
 require_relative 'board'
 require_relative 'player'
+require 'colorize'
 
 class Game 
     attr_accessor :board_game, :p1, :p2, :turn
@@ -19,8 +20,9 @@ class Game
         board = board_game.board
         choice_index = board.index(choice)
         change_index = choice_index - 16
+        colorized_choice = 'o'.colorize(:yellow)
 
-        board[choice_index] = "o"
+        board[choice_index] = colorized_choice
         board[change_index] = choice
 
         board
