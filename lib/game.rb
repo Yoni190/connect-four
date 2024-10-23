@@ -20,18 +20,22 @@ class Game
         board = board_game.board
         choice_index = board.index(choice)
         change_index = choice_index - 16
-        if turn.zero?
-            colorized_choice = 'o'.colorize(:yellow)
-            turn = 1
-        elsif turn == 1 
-            colorized_choice = 'o'.colorize(:red)
-            turn = 0
-        end
+        colorized_choice = get_color
 
         board[choice_index] = colorized_choice
         board[change_index] = choice
 
         board
+    end
+
+    def get_color
+        if turn.zero?
+            self.turn = 1
+            return 'o'.colorize(:yellow)
+        elsif turn == 1
+            self.turn = 0
+            return 'o'.colorize(:red)
+        end
     end
 
     def prompt_choice

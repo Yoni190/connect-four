@@ -24,7 +24,7 @@ describe Game do
             end
         end
         context 'when player 2 chooses 1' do
-            xit 'returns a new board' do
+            it 'returns a new board' do
                 turn = 1
                 choice = "1"
                 colored_choice = "o".colorize(:red)
