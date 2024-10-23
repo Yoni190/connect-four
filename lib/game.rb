@@ -5,9 +5,10 @@ class Game
     attr_accessor :board
     def initialize
         board = Board.new
-        p1 = Player.new
-        p2 = Player.new
         greet_players
+        p1 = Player.new(get_name)
+        p2 = Player.new(get_name)
+        
     end
 
     def greet_players
@@ -17,5 +18,10 @@ class Game
           | \t\s\sBeat your opponent by aligning four pieces horizontally, vertically, or diagonally \s\s\t|\n
           -----------------------------------------------------------------------------------------------\n\n"
           puts greeting
+    end
+
+    def get_name
+        puts "Enter your name Player:"
+        gets.chomp
     end
 end

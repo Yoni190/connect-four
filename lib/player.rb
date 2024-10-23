@@ -1,7 +1,7 @@
 class Player
     attr_accessor :name, :score
-    def initialize(name = "player", score = 0)
+    def initialize(name = "player")
         self.name = name
-        self.score = score
+        self.score = 0
     end
 end
