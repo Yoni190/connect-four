@@ -2,32 +2,35 @@ require_relative 'board'
 require_relative 'player'
 
 class Game 
-    attr_accessor :board_game, :p1, :p2, :turn, :win
+    attr_accessor :board_game, :p1, :p2, :turn, :stop
     def initialize
         self.board_game = Board.new
         greet_players
         self.p1 = Player.new(get_name)
         self.p2 = Player.new(get_name)
         self.turn = 0
-        self.win = 0
+        self.stop = 0
     end
 
     def play_game
         board = board_game.board
-        while win.zero?
+        while stop.zero?
             display_board
             play_round
         end
-
-        if turn.zero?
-            puts "#{p2.name} wins"
+        if self.stop == 1
+            if turn.zero?
+                puts "#{p2.name} wins"
+            else
+                puts "#{p1.name} wins"
+            end
         else
-            puts "#{p1.name} wins"
+            puts "It's a tie"
         end
         display_board
         if continue?
             self.board_game = Board.new
-            self.win = 0
+            self.stop = 0
             play_game
         else
             puts "Goodbye"
@@ -64,7 +67,9 @@ class Game
         end
 
         if win?(choice_index)
-            self.win = 1
+            self.stop = 1
+        elsif tie?
+            self.stop = 2
         end
         board
         
@@ -87,10 +92,10 @@ class Game
 
     def tie?
         board = board_game.board
-        if board.include?("1") && board.include?("2") && board.include?("3") && board.include?("4") && board.include?("5") && board.include?("6") && board.include?("7")
-            true
-        else
+        if board.include?("1") || board.include?("2") || board.include?("3") || board.include?("4") || board.include?("5") || board.include?("6") || board.include?("7")
             false
+        else
+            true
         end
     end
 
