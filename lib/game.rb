@@ -2,18 +2,19 @@ require_relative 'board'
 require_relative 'player'
 
 class Game 
-    attr_accessor :board_game, :p1, :p2, :turn
+    attr_accessor :board_game, :p1, :p2, :turn, :win
     def initialize
         self.board_game = Board.new
         greet_players
         self.p1 = Player.new(get_name)
         self.p2 = Player.new(get_name)
         self.turn = 0
+        self.win = 0
     end
 
-    def play_game(game = 0)
+    def play_game
         board = board_game.board
-        while game.zero?
+        while win.zero?
             display_board
             play_round
         end
@@ -23,16 +24,19 @@ class Game
         else
             puts "#{p1.name} wins"
         end
+        display_board
         if continue?
             self.board_game = Board.new
+            self.win = 0
             play_game
         else
             puts "Goodbye"
+            return 0
         end
     end
 
     def continue?
-        puts "Do you want to continu?(Y/n)"
+        puts "Do you want to continue?(Y/n)"
         response = gets.chomp.downcase
         if response == "y"
             true
@@ -60,7 +64,7 @@ class Game
         end
 
         if win?(choice_index)
-            play_game(1)
+            self.win = 1
         end
         board
         
@@ -69,10 +73,21 @@ class Game
     def win?(choice)
         board = board_game.board
         if board[choice] == board[choice + 2] && board[choice] == board[choice + 4] && board[choice] == board[choice + 6] ||
+            board[choice] == board[choice + 2] && board[choice] == board[choice + 4] && board[choice] == board[choice - 2] ||
+            board[choice] == board[choice - 2] && board[choice] == board[choice - 4] && board[choice] == board[choice + 2] ||
             board[choice] == board[choice - 2] && board[choice] == board[choice - 4] && board[choice] == board[choice - 6] ||
             board[choice] == board[choice + 16] && board[choice] == board[choice + 32] && board[choice] == board[choice + 48] ||
             board[choice] == board[choice + 14] && board[choice] == board[choice + 28] && board[choice] == board[choice + 42]
             
+            true
+        else
+            false
+        end
+    end
+
+    def tie?
+        board = board_game.board
+        if board.include?("1") && board.include?("2") && board.include?("3") && board.include?("4") && board.include?("5") && board.include?("6") && board.include?("7")
             true
         else
             false
