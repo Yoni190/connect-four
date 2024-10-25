@@ -1,6 +1,5 @@
 require_relative 'board'
 require_relative 'player'
-require 'colorize'
 
 class Game 
     attr_accessor :board_game, :p1, :p2, :turn
@@ -13,7 +12,7 @@ class Game
     end
 
     def play_game
-        7.times do
+        20.times do
         display_board
         play_round
         end
@@ -28,21 +27,33 @@ class Game
         board = board_game.board
         choice_index = board.index(choice)
         change_index = choice_index - 16
-        colorized_choice = get_color
+        piece = get_piece
 
-        board[choice_index] = colorized_choice
-        board[change_index] = choice
+        if valid_move?(choice_index)
+            board[choice_index] = piece
+        else
+            board[choice_index] = piece
+            board[change_index] = choice
+        end
 
         board
     end
 
-    def get_color
+    def valid_move?(choice)
+        if [1, 3, 5, 7, 9, 11, 13].include?(choice)
+            true
+        else
+            false
+        end
+    end
+
+    def get_piece
         if turn.zero?
             self.turn = 1
-            return 'o'.colorize(:yellow)
+            return 'x'
         elsif turn == 1
             self.turn = 0
-            return 'o'.colorize(:red)
+            return 'y'
         end
     end
 
