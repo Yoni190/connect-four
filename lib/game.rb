@@ -11,10 +11,33 @@ class Game
         self.turn = 0
     end
 
-    def play_game
-        20.times do
-        display_board
-        play_round
+    def play_game(game = 0)
+        board = board_game.board
+        while game.zero?
+            display_board
+            play_round
+        end
+
+        if turn.zero?
+            puts "#{p2.name} wins"
+        else
+            puts "#{p1.name} wins"
+        end
+        if continue?
+            self.board_game = Board.new
+            play_game
+        else
+            puts "Goodbye"
+        end
+    end
+
+    def continue?
+        puts "Do you want to continu?(Y/n)"
+        response = gets.chomp.downcase
+        if response == "y"
+            true
+        else
+            false
         end
     end
 
@@ -36,7 +59,24 @@ class Game
             board[change_index] = choice
         end
 
+        if win?(choice_index)
+            play_game(1)
+        end
         board
+        
+    end
+
+    def win?(choice)
+        board = board_game.board
+        if board[choice] == board[choice + 2] && board[choice] == board[choice + 4] && board[choice] == board[choice + 6] ||
+            board[choice] == board[choice - 2] && board[choice] == board[choice - 4] && board[choice] == board[choice - 6] ||
+            board[choice] == board[choice + 16] && board[choice] == board[choice + 32] && board[choice] == board[choice + 48] ||
+            board[choice] == board[choice + 14] && board[choice] == board[choice + 28] && board[choice] == board[choice + 42]
+            
+            true
+        else
+            false
+        end
     end
 
     def valid_move?(choice)
